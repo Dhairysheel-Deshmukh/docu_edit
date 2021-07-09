@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:filesystem_picker/filesystem_picker.dart';
 import 'package:flutter/foundation.dart';
@@ -11,7 +10,6 @@ import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:tuple/tuple.dart';
-
 import '../universal_ui/universal_ui.dart';
 import 'read_only_page.dart';
 
@@ -57,35 +55,47 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: Colors.grey.shade800,
         elevation: 0,
-        centerTitle: false,
-        title: const Text(
-          'Flutter Quill',
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: (){
+            Navigator.pop(context);
+          },
         ),
-        actions: [],
+        title: const Text(
+          'Edit Document',
+        ),
+        actions: [
+          Column(
+            children: [
+              IconButton(onPressed: (){}, icon: Icon(Icons.save)),
+              //Text("Save")
+            ],
+          )
+        ],
+
       ),
-      drawer: Container(
-        constraints:
-        BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.7),
-        color: Colors.grey.shade800,
-        child: _buildMenuBar(context),
-      ),
-      body: RawKeyboardListener(
-        focusNode: FocusNode(),
-        onKey: (event) {
-          if (event.data.isControlPressed && event.character == 'b') {
-            if (_controller!
-                .getSelectionStyle()
-                .attributes
-                .keys
-                .contains('bold')) {
-              _controller!
-                  .formatSelection(Attribute.clone(Attribute.bold, null));
-            } else {
-              _controller!.formatSelection(Attribute.bold);
+
+      body: Padding(
+        padding: const EdgeInsets.all(18.0),
+        child: RawKeyboardListener(
+          focusNode: FocusNode(),
+          onKey: (event) {
+            if (event.data.isControlPressed && event.character == 'b') {
+              if (_controller!
+                  .getSelectionStyle()
+                  .attributes
+                  .keys
+                  .contains('bold')) {
+                _controller!
+                    .formatSelection(Attribute.clone(Attribute.bold, null));
+              } else {
+                _controller!.formatSelection(Attribute.bold);
+              }
             }
-          }
-        },
-        child: _buildWelcomeEditor(context),
+          },
+          child: _buildWelcomeEditor(context),
+        ),
       ),
     );
   }
