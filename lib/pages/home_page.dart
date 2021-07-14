@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
             document: doc, selection: const TextSelection.collapsed(offset: 0));
       });
     } catch (error) {
-      final doc = Document()..insert(0, 'Empty asset');
+      final doc = Document()..insert(0, '');
       setState(() {
         _controller = QuillController(
             document: doc, selection: const TextSelection.collapsed(offset: 0));
