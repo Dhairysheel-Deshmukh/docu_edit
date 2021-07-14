@@ -13,9 +13,12 @@ import 'package:tuple/tuple.dart';
 import '../universal_ui/universal_ui.dart';
 import 'read_only_page.dart';
 
+
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
+
 }
 
 class _HomePageState extends State<HomePage> {
@@ -68,7 +71,11 @@ class _HomePageState extends State<HomePage> {
         actions: [
           Column(
             children: [
-              IconButton(onPressed: (){}, icon: Icon(Icons.save)),
+              IconButton(onPressed: (){
+                ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text('Successfully Saved',textAlign: TextAlign.center,)));
+                },
+                  icon: Icon(Icons.save)),
               //Text("Save")
             ],
           )
@@ -200,9 +207,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // Renders the image picked by imagePicker from local file storage
-  // You can also upload the picked image to any server (eg : AWS s3
-  // or Firebase) and then return the uploaded image URL.
   Future<String> _onImagePickCallback(File file) async {
     // Copies the picked file from temporary cache to applications directory
     final appDocDir = await getApplicationDocumentsDirectory();
